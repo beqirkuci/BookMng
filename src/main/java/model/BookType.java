@@ -26,4 +26,13 @@ public class BookType {
 
   private String name;
   private String description;
+
+  @Override
+  public String toString() {
+    return "BookType{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", description='" + description + '\'' +
+        '}';
+  }
 }
