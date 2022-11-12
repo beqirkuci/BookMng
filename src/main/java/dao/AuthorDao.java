@@ -12,12 +12,7 @@ import org.hibernate.cfg.Configuration;
 public class AuthorDao {
   private  HibernateConfig hibernateConfig = new HibernateConfig();
 
-  public void addAuthor() {
-    Author author = Author.builder().name("Ismail1111")
-        .surname("Kadare")
-        .email("kadare@gmail.com").build();
-
-
+  public void addAuthor(Author author) {
     Session session = hibernateConfig.getCurrentSessionFromConfig();
     Transaction transaction = session.beginTransaction();
     session.save(author);
@@ -31,5 +26,18 @@ public class AuthorDao {
     List list = session1.createQuery("from Author ").list();
     list.stream().forEach(System.out::println);
     transaction1.commit();
+  }
+
+  public Author findByNameAndSurname(String name, String surname) {
+    Session session1 = hibernateConfig.getCurrentSessionFromConfig();
+    Transaction transaction1 = session1.beginTransaction();
+    List list = session1.createQuery("from Author where"
+        + " name = ?1 and surname= ?2 ")
+        .setParameter(1,name)
+        .setParameter(2,surname)
+        .list();
+    list.stream().forEach(System.out::println);
+    transaction1.commit();
+    return (Author) list.get(0);
   }
 }
